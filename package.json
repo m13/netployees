@@ -11,5 +11,8 @@
     "url": "git@github.com:m13/netployees.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "neo4j-driver": "1.7.5"
+  }
 }
