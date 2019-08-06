@@ -1,0 +1,55 @@
+version: 2
+
+defaults: &defaults
+  docker:
+  - image: circleci/node:10
+  working_directory: ~/netployees
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/netployees
+
+jobs:
+  dependencies:
+    <<: *defaults
+    steps:
+    - checkout
+    - *attach_workspace
+    - restore_cache:
+        key: npm-v1-{{ checksum "package-lock.json" }}
+    - run:
+        command: npm install
+    - save_cache:
+        key: npm-v1-{{ checksum "package-lock.json" }}
+        paths:
+        - node_modules
+    - persist_to_workspace:
+        root: ~/netployees
+        paths:
+        - ./
+
+  ## add lint
+
+  unit_test:
+    <<: *defaults
+    steps:
+    - *attach_workspace
+    - run:
+        command: npm test
+
+  done:
+    <<: *defaults
+    steps:
+    - run: echo done
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+    - dependencies
+    - unit_test:
+        requires:
+        - dependencies
+    - done:
+        requires:
+        - unit_test
