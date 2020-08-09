@@ -2,7 +2,7 @@
   "name": "netployees",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "netployees.js",
   "scripts": {
     "test": "echo \"OK: no test specified\" && exit 0"
   },
@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "neo4j-driver": "1.7.5"
+    "chalk": "2.4.2",
+    "get-stdin": "7.0.0",
+    "neo4j-driver": "1.7.5",
+    "sentiment": "5.0.1"
   }
 }
